@@ -3,16 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "dev": "turbo run app:dev",
+    "build": "turbo run app:build",
+    "lint": "turbo run app:lint",
+    "check-types": "turbo run check-types",
+    "test": "turbo run test:unit",
+    "e2e": "turbo run test:e2e",
+    "app:dev": "next dev --turbo",
+    "app:build": "next build --turbopack",
+    "app:lint": "next lint",
+    "test:unit": "jest",
+    "test:e2e": "cypress run"
   },
   "dependencies": {
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/icons-material": "7.3.7",
+    "@mui/material": "7.3.7",
+    "@mui/material-nextjs": "7.3.7",
+    "@reduxjs/toolkit": "2.11.2",
     "next": "16.1.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-redux": "9.2.0"
   },
+  "packageManager": "pnpm@10.19.0",
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -21,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "turbo": "2.7.3",
+    "typescript": "^5.9.3"
   }
 }
