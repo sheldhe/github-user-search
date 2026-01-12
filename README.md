@@ -25,13 +25,6 @@ pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
 
 ## Frontend Stack
 
-2. 환경 변수 설정
-   프로젝트 루트에 .env.local 파일을 생성하고 GitHub 토큰을 설정합니다.
-
-Bash
-
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
-
 - **Next.js (App Router)**
   - Server Components / Client Components 분리
   - Route Segment 기반 구조
@@ -82,21 +75,26 @@ pnpm install
 ## 2. 환경 변수 설정
 
 GitHub Search API 사용을 위해 토큰이 필요합니다.
+<br/>
 .env.local 파일 생성:
+<br/>
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
+<br/>
 
 ## 3. 개발 서버 실행
 
+<br/>
 pnpm dev
-
+<br/>
 # 테스트 실행 방법
 
 본 프로젝트는 Jest (단위/통합) + Cypress (E2E) 를 함께 사용합니다.
 
 ## 단위 / 통합 테스트 (Jest)
 
-실행
+<br/>
 pnpm test:unit
+<br/>
 pnpm test:watch
 
 테스트 대상
@@ -109,8 +107,9 @@ pnpm test:watch
 ## E2E 테스트 (Cypress)
 
 개발 서버 기반 실행
+<br/>
 pnpm e2e:dev
-
+<br/>
 내부 동작:
 
 - Next.js dev 서버 실행
@@ -118,8 +117,10 @@ pnpm e2e:dev
 - 테스트 종료 후 서버 종료
 
 Cypress UI 모드
+<br/>
 
 - pnpm cypress:open
+  <br/>
 
 ## E2E 테스트 범위 정리
 
