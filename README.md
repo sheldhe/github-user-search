@@ -1,5 +1,7 @@
 # 개발 및 테스트 환경
 
+# Clean Architecture + Modularity
+
 본 프로젝트는 Clean Architecture를 기반으로 하여
 도메인 로직, 애플리케이션 로직, UI 레이어를 명확히 분리합니다.
 
@@ -10,6 +12,26 @@
 - 변경에 강한 구조
 - 테스트 용이성
 - 기능 단위 확장 및 유지보수성 향상
+
+## Monorepo & Modularity
+
+pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
+
+- 공통 모듈(도메인, 유틸, UI 등)을 패키지 단위로 분리
+- 앱 간 코드 중복 최소화
+- 터보 레포를 활용한 병렬 빌드 및 캐싱으로 개발 속도 개선
+  각 패키지는 독립적인 책임과 명확한 경계를 가지며,
+  의존 관계는 최소화합니다.
+
+## Frontend Stack
+
+- Next.js (App Router)
+  -- Server Components / Client Components 분리
+  -- Route Segment 기반 구조
+- TypeScript
+  -- strict 모드 활성화
+  -- 타입 안정성을 통한 런타임 오류 최소화
+- ES2023
 
 ## Jest + Cypress Type 충돌 이슈
 
