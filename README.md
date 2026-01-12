@@ -25,6 +25,13 @@ pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
 
 ## Frontend Stack
 
+2. 환경 변수 설정
+   프로젝트 루트에 .env.local 파일을 생성하고 GitHub 토큰을 설정합니다.
+
+Bash
+
+GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
+
 - **Next.js (App Router)**
   - Server Components / Client Components 분리
   - Route Segment 기반 구조
