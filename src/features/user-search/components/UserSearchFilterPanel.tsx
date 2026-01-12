@@ -5,21 +5,24 @@ import type { UserSearchFilters } from "@/src/domain/github/userSearchFilters";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import type { DEFAULT_QUERY } from "@/src/domain/github/userSearchDefaults";
+
+type SortKey = "followers" | "repositories" | "joined";
+type OrderKey = "asc" | "desc";
 
 type Props = {
   draft: UserSearchFilters;
   setDraft: React.Dispatch<React.SetStateAction<UserSearchFilters>>;
 
-  sort: typeof DEFAULT_QUERY.sort;
-  setSort: (v: any) => void;
+  sort: SortKey;
+  setSort: (v: SortKey) => void;
 
-  order: typeof DEFAULT_QUERY.order;
-  setOrder: (v: any) => void;
+  order: OrderKey;
+  setOrder: (v: OrderKey) => void;
 
   disabled?: boolean;
   onApply: () => void;
   onReset: () => void;
+  onLoadMore: () => void;
 };
 
 export default function UserSearchFilterPanel({
@@ -32,17 +35,25 @@ export default function UserSearchFilterPanel({
   disabled,
   onApply,
   onReset,
+  onLoadMore,
 }: Props) {
-  const applyDisabled = disabled || draft.keyword === "";
+  const applyDisabled = disabled || draft.keyword.trim() === "";
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3"
+      data-cy="filter-panel"
+    >
+      {/* Keyword */}
       <TextField
         label="Keyword"
         size="small"
         value={draft.keyword}
+        inputProps={{ "data-cy": "keyword" }}
         onChange={(e) => setDraft((p) => ({ ...p, keyword: e.target.value }))}
       />
 
+      {/* Search In (select) */}
       <TextField
         select
         label="Search In"
@@ -51,11 +62,25 @@ export default function UserSearchFilterPanel({
         onChange={(e) =>
           setDraft((p) => ({ ...p, inField: e.target.value as any }))
         }
+        SelectProps={{
+          inputProps: { "data-cy": "inField-select" },
+          MenuProps: {
+            PaperProps: { "data-cy": "inField-menu" } as any,
+          },
+        }}
       >
-        <MenuItem value="login">login</MenuItem>
-        <MenuItem value="name">name</MenuItem>
-        <MenuItem value="email">email</MenuItem>
+        <MenuItem value="login" data-cy="inField-login">
+          login
+        </MenuItem>
+        <MenuItem value="name" data-cy="inField-name">
+          name
+        </MenuItem>
+        <MenuItem value="email" data-cy="inField-email">
+          email
+        </MenuItem>
       </TextField>
+
+      {/* Type (select) */}
       <TextField
         select
         label="Type"
@@ -64,12 +89,23 @@ export default function UserSearchFilterPanel({
         onChange={(e) =>
           setDraft((p) => ({ ...p, accountType: e.target.value as any }))
         }
+        SelectProps={{
+          inputProps: { "data-cy": "accountType-select" },
+          MenuProps: { PaperProps: { "data-cy": "accountType-menu" } as any },
+        }}
       >
-        <MenuItem value="all">All</MenuItem>
-        <MenuItem value="user">User only</MenuItem>
-        <MenuItem value="org">Org only</MenuItem>
+        <MenuItem value="all" data-cy="accountType-all">
+          All
+        </MenuItem>
+        <MenuItem value="user" data-cy="accountType-user">
+          User only
+        </MenuItem>
+        <MenuItem value="org" data-cy="accountType-org">
+          Org only
+        </MenuItem>
       </TextField>
 
+      {/* Sponsorable (select) */}
       <TextField
         select
         label="Sponsorable"
@@ -78,30 +114,44 @@ export default function UserSearchFilterPanel({
         onChange={(e) =>
           setDraft((p) => ({ ...p, sponsorable: e.target.value === "yes" }))
         }
+        SelectProps={{
+          inputProps: { "data-cy": "sponsorable-select" },
+          MenuProps: { PaperProps: { "data-cy": "sponsorable-menu" } as any },
+        }}
       >
-        <MenuItem value="no">No</MenuItem>
-        <MenuItem value="yes">Yes (is:sponsorable)</MenuItem>
+        <MenuItem value="no" data-cy="sponsorable-no">
+          No
+        </MenuItem>
+        <MenuItem value="yes" data-cy="sponsorable-yes">
+          Yes (is:sponsorable)
+        </MenuItem>
       </TextField>
 
+      {/* Location */}
       <TextField
         label="Location"
         size="small"
         value={draft.location ?? ""}
+        inputProps={{ "data-cy": "location" }}
         onChange={(e) => setDraft((p) => ({ ...p, location: e.target.value }))}
       />
 
+      {/* Language */}
       <TextField
         label="Language"
         size="small"
         value={draft.language ?? ""}
+        inputProps={{ "data-cy": "language" }}
         onChange={(e) => setDraft((p) => ({ ...p, language: e.target.value }))}
       />
 
+      {/* Repos min/max */}
       <TextField
         label="Repos Min"
         type="number"
         size="small"
         value={draft.repos?.min ?? ""}
+        inputProps={{ "data-cy": "repos-min" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -117,6 +167,7 @@ export default function UserSearchFilterPanel({
         type="number"
         size="small"
         value={draft.repos?.max ?? ""}
+        inputProps={{ "data-cy": "repos-max" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -128,11 +179,13 @@ export default function UserSearchFilterPanel({
         }
       />
 
+      {/* Followers min/max */}
       <TextField
         label="Followers Min"
         type="number"
         size="small"
         value={draft.followers?.min ?? ""}
+        inputProps={{ "data-cy": "followers-min" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -148,6 +201,7 @@ export default function UserSearchFilterPanel({
         type="number"
         size="small"
         value={draft.followers?.max ?? ""}
+        inputProps={{ "data-cy": "followers-max" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -159,11 +213,14 @@ export default function UserSearchFilterPanel({
         }
       />
 
+      {/* Created from/to */}
       <TextField
         label="Created From"
         type="date"
         size="small"
+        InputLabelProps={{ shrink: true }}
         value={draft.created?.from ?? ""}
+        inputProps={{ "data-cy": "created-from" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -178,7 +235,9 @@ export default function UserSearchFilterPanel({
         label="Created To"
         type="date"
         size="small"
+        InputLabelProps={{ shrink: true }}
         value={draft.created?.to ?? ""}
+        inputProps={{ "data-cy": "created-to" }}
         onChange={(e) =>
           setDraft((p) => ({
             ...p,
@@ -187,34 +246,68 @@ export default function UserSearchFilterPanel({
         }
       />
 
+      {/* Sort (select) */}
       <TextField
         select
         label="Sort"
         size="small"
         value={sort}
-        onChange={(e) => setSort(e.target.value as any)}
+        onChange={(e) => setSort(e.target.value as SortKey)}
+        SelectProps={{
+          inputProps: { "data-cy": "sort-select" },
+          MenuProps: { PaperProps: { "data-cy": "sort-menu" } as any },
+        }}
       >
-        <MenuItem value="followers">followers</MenuItem>
-        <MenuItem value="repositories">repositories</MenuItem>
-        <MenuItem value="joined">joined</MenuItem>
+        <MenuItem value="followers" data-cy="sort-followers">
+          followers
+        </MenuItem>
+        <MenuItem value="repositories" data-cy="sort-repositories">
+          repositories
+        </MenuItem>
+        <MenuItem value="joined" data-cy="sort-joined">
+          joined
+        </MenuItem>
       </TextField>
 
+      {/* Order (select) */}
       <TextField
         select
         label="Order"
         size="small"
         value={order}
-        onChange={(e) => setOrder(e.target.value as any)}
+        onChange={(e) => setOrder(e.target.value as OrderKey)}
+        SelectProps={{
+          inputProps: { "data-cy": "order-select" },
+          MenuProps: { PaperProps: { "data-cy": "order-menu" } as any },
+        }}
       >
-        <MenuItem value="desc">DESC</MenuItem>
-        <MenuItem value="asc">ASC</MenuItem>
+        <MenuItem value="desc" data-cy="order-desc">
+          DESC
+        </MenuItem>
+        <MenuItem value="asc" data-cy="order-asc">
+          ASC
+        </MenuItem>
       </TextField>
 
+      {/* Actions */}
       <div className="flex gap-2 items-center">
-        <Button variant="contained" onClick={onApply} disabled={applyDisabled}>
+        <Button
+          variant="contained"
+          onClick={onApply}
+          disabled={applyDisabled}
+          data-cy="apply"
+        >
           Apply
         </Button>
-        <Button variant="outlined" onClick={onReset} disabled={disabled}>
+        <Button data-cy="load-more" variant="outlined" onClick={onLoadMore}>
+          Load more
+        </Button>
+        <Button
+          variant="outlined"
+          onClick={onReset}
+          disabled={disabled}
+          data-cy="reset"
+        >
           Reset
         </Button>
       </div>

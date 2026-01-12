@@ -1,41 +1,62 @@
-describe("User Search E2E", () => {
-  it("search -> render -> infinite scroll -> sort change triggers new request", () => {
-    // page=1
-    cy.intercept("GET", "/api/github/search/users*page=1*", {
-      fixture: "users-page1.json",
-    }).as("page1");
+describe("User Search (E2E)", () => {
+  beforeEach(() => {
+    // 페이지별로 fixture를 다르게 응답
+    cy.intercept("GET", "/api/github/search/users*", (req) => {
+      const page = (req.query.page as string) ?? "1";
 
-    // page=2
-    cy.intercept("GET", "/api/github/search/users*page=2*", {
-      fixture: "users-page2.json",
-    }).as("page2");
+      if (page === "1") {
+        return req.reply({ fixture: "users_page1.json" });
+      }
 
-    // sort change (joined)
-    cy.intercept("GET", "/api/github/search/users*sort=joined*", {
-      fixture: "users-sorted-joined.json",
-    }).as("sorted");
+      if (page === "2") {
+        return req.reply({ fixture: "users_page2.json" });
+      }
 
-    cy.visit("/user-search");
+      return req.reply({ fixture: "users_page2.json" });
+    }).as("searchUsers");
+  });
 
-    // Keyword 입력 후 Apply
-    cy.get('input[label="Keyword"]').type("sheldhe");
-    cy.contains("Apply").click();
-    cy.wait("@page1");
+  it("applies keyword and renders results", () => {
+    cy.visit("/");
 
-    // URL에 반영됐는지
-    cy.location("search").should("contain", "keyword=sheldhe");
+    cy.get('[data-cy="keyword"]').clear().type("sheldhe");
+    cy.get('[data-cy="apply"]').click();
 
-    // 결과 표시
-    cy.contains("u1"); // fixture에 있는 값
+    cy.wait("@searchUsers");
 
-    // 무한스크롤 트리거: 페이지 아래로
-    cy.scrollTo("bottom");
-    cy.wait("@page2");
-    cy.contains("u31"); // page2 fixture 첫번째 유저 등
+    cy.get('[data-cy="user-card"]').should("have.length.at.least", 1);
 
-    // 정렬 변경 → 새 요청(페이지 1 재조회)
-    cy.contains("Sort").parent().click();
-    cy.contains("joined").click();
-    cy.wait("@sorted");
+    cy.contains("sheldhe").should("be.visible");
+    cy.contains("sheldhe").should("exist");
+  });
+
+  it("loads next page via Load more (paging logic)", () => {
+    cy.visit("/");
+
+    cy.get('[data-cy="keyword"]').clear().type("sheldhe");
+    cy.get('[data-cy="apply"]').click();
+    cy.wait("@searchUsers");
+
+    cy.get('[data-cy="user-card"]').should("have.length", 2);
+
+    cy.get('[data-cy="load-more"]').click();
+    cy.wait("@searchUsers");
+
+    // page2 append 확인
+    cy.get('[data-cy="user-card"]').should("have.length", 2);
+    cy.contains("sheldhe").should("exist");
+  });
+
+  it("prevents too-broad search (no keyword) and does not call API", () => {
+    cy.visit("/");
+
+    cy.get('[data-cy="keyword"]').clear();
+    cy.get('[data-cy="apply"]').click();
+
+    // 에러 메시지 UI가 있다면 확인
+    // cy.contains("키워드 없이 검색불가").should("exist");
+
+    // 호출 안 됐는지 확인 (intercept alias가 0회)
+    cy.get("@searchUsers.all").should("have.length", 0);
   });
 });

@@ -95,51 +95,51 @@ export function parseUserSearchFromParams(
   return { filters, sort, order, perPage };
 }
 
-export function filtersToSearchParams(
-  filters: UserSearchFilters,
-  extra?: {
-    sort?: string;
-    order?: string;
-    perPage?: number;
-  }
-) {
-  const p = new URLSearchParams();
+// export function filtersToSearchParams(
+//   filters: UserSearchFilters,
+//   extra?: {
+//     sort?: string;
+//     order?: string;
+//     perPage?: number;
+//   }
+// ) {
+//   const p = new URLSearchParams();
 
-  // 필수/기본
-  if (filters.keyword) p.set("keyword", filters.keyword);
-  if (filters.inField) p.set("in", filters.inField);
-  if (filters.accountType) p.set("type", filters.accountType);
+//   // 필수/기본
+//   if (filters.keyword) p.set("keyword", filters.keyword);
+//   if (filters.inField) p.set("in", filters.inField);
+//   if (filters.accountType) p.set("type", filters.accountType);
 
-  // 3 repos
-  if (filters.repos?.min != null) p.set("reposMin", String(filters.repos.min));
-  if (filters.repos?.max != null) p.set("reposMax", String(filters.repos.max));
+//   // 3 repos
+//   if (filters.repos?.min != null) p.set("reposMin", String(filters.repos.min));
+//   if (filters.repos?.max != null) p.set("reposMax", String(filters.repos.max));
 
-  // 4 location
-  if (filters.location) p.set("location", filters.location);
+//   // 4 location
+//   if (filters.location) p.set("location", filters.location);
 
-  // 5 language
-  if (filters.language) p.set("language", filters.language);
+//   // 5 language
+//   if (filters.language) p.set("language", filters.language);
 
-  // 6 created
-  if (filters.created?.from) p.set("createdFrom", filters.created.from);
-  if (filters.created?.to) p.set("createdTo", filters.created.to);
+//   // 6 created
+//   if (filters.created?.from) p.set("createdFrom", filters.created.from);
+//   if (filters.created?.to) p.set("createdTo", filters.created.to);
 
-  // 7 followers
-  if (filters.followers?.min != null)
-    p.set("followersMin", String(filters.followers.min));
-  if (filters.followers?.max != null)
-    p.set("followersMax", String(filters.followers.max));
+//   // 7 followers
+//   if (filters.followers?.min != null)
+//     p.set("followersMin", String(filters.followers.min));
+//   if (filters.followers?.max != null)
+//     p.set("followersMax", String(filters.followers.max));
 
-  // 8 sponsorable
-  if (filters.sponsorable) p.set("sponsorable", "1");
+//   // 8 sponsorable
+//   if (filters.sponsorable) p.set("sponsorable", "1");
 
-  // sort/order/perPage
-  if (extra?.sort) p.set("sort", extra.sort);
-  if (extra?.order) p.set("order", extra.order);
-  if (extra?.perPage) p.set("perPage", String(extra.perPage));
+//   // sort/order/perPage
+//   if (extra?.sort) p.set("sort", extra.sort);
+//   if (extra?.order) p.set("order", extra.order);
+//   if (extra?.perPage) p.set("perPage", String(extra.perPage));
 
-  return p;
-}
+//   return p;
+// }
 
 export function toUserSearchParams(
   filters: UserSearchFilters,

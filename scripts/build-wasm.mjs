@@ -16,4 +16,4 @@ const { buffer } = mod.toBinary({ log: false, write_debug_names: true });
 await fs.mkdir(outDir, { recursive: true });
 await fs.writeFile(outPath, Buffer.from(buffer));
 
-console.log("✅ wrote:", outPath);
+console.log("wrote:", outPath);

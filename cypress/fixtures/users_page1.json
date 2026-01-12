@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "data": {
+    "total_count": 2,
+    "incomplete_results": false,
+    "items": [
+      {
+        "id": 41041392,
+        "login": "sheldhe",
+        "avatar_url": "https://avatars.githubusercontent.com/u/41041392?v=4",
+        "html_url": "https://github.com/sheldhe",
+        "type": "User"
+      },
+      {
+        "id": 31649681,
+        "login": "sheldhe93",
+        "avatar_url": "https://avatars.githubusercontent.com/u/31649681?v=4",
+        "html_url": "https://github.com/sheldhe93",
+        "type": "User"
+      }
+    ]
+  },
+  "rateLimit": { "limit": 30, "remaining": 23, "reset": 1768191073 }
+}

@@ -36,6 +36,7 @@ export default function UserSearchClient(props: Props) {
         disabled={c.isFetching}
         onApply={c.apply}
         onReset={c.reset}
+        onLoadMore={c.loadMore}
       />
 
       <UserSearchStatusBar

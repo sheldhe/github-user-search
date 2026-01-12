@@ -1,9 +1,8 @@
 import { buildUserSearchQ } from "@/src/domain/github/userSearchQuery";
 import type { UserSearchFilters } from "@/src/domain/github/userSearchFilters";
 
-//검색 쿼리(buildUserSearchQ) 단위 테스트
 describe("buildUserSearchQ", () => {
-  it("builds query with all required qualifiers", () => {
+  it("모든 필터가 주어졌을 때 GitHub 사용자 검색 쿼리를 생성한다", () => {
     const filters: UserSearchFilters = {
       accountType: "user",
       keyword: "sheldhe",
@@ -18,7 +17,6 @@ describe("buildUserSearchQ", () => {
 
     const q = buildUserSearchQ(filters)!;
 
-    // 핵심: 포함 여부만 체크 (문자열 전체 동등비교는 유지보수 어려움)
     expect(q).toContain("sheldhe");
     expect(q).toContain("in:login");
     expect(q).toContain("type:user");
@@ -30,7 +28,7 @@ describe("buildUserSearchQ", () => {
     expect(q).toContain("is:sponsorable");
   });
 
-  it("returns empty when too broad (prevents rate-limit) - optional rule", () => {
+  it("검색에 사용할 수 있는 필터가 하나도 없으면 빈 문자열을 반환한다", () => {
     const filters: UserSearchFilters = {
       accountType: "all",
       keyword: "",
@@ -47,7 +45,7 @@ describe("buildUserSearchQ", () => {
     expect(q).toBe("");
   });
 
-  it("does not add type qualifier when accountType is all", () => {
+  it("accountType이 all이면 type:user 또는 type:org 조건을 추가하지 않는다", () => {
     const filters: UserSearchFilters = {
       accountType: "all",
       keyword: "abc",
@@ -61,6 +59,7 @@ describe("buildUserSearchQ", () => {
     };
 
     const q = buildUserSearchQ(filters)!;
+
     expect(q).not.toContain("type:user");
     expect(q).not.toContain("type:org");
   });

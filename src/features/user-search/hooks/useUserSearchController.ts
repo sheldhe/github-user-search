@@ -13,6 +13,7 @@ import type {
 } from "../model/github.types";
 import { useLazySearchUsersQuery } from "../api/userSearchApi";
 import { DEFAULT_QUERY } from "@/src/domain/github/userSearchDefaults";
+import { OrderKey, SortKey } from "../model/search.args";
 
 type Args = {
   initialQ: string;
@@ -291,8 +292,8 @@ export function useUserSearchController({
 
     // actions
     setDraft,
-    setSort,
-    setOrder,
+    setSort: setSort as (v: SortKey) => void,
+    setOrder: setOrder as (v: OrderKey) => void,
     apply,
     reset,
     loadMore,

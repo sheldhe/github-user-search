@@ -3,7 +3,6 @@
 import AvatarCanvas from "@/src/shared/ui/AvatarCanvas";
 import type { GitHubUserItem } from "../model/github.types";
 import Chip from "@mui/material/Chip";
-// import AvatarCanvas from "@/src/shared/ui/AvatarCanvas";
 
 type Props = { items: GitHubUserItem[] };
 
@@ -13,6 +12,8 @@ export default function UserSearchList({ items }: Props) {
       {items.map((u) => (
         <a
           key={u.id}
+          data-cy="user-card"
+          data-userid={u.id}
           href={u.html_url}
           target="_blank"
           rel="noreferrer"

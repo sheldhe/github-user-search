@@ -1,7 +1,7 @@
 import { resolveInitialUserSearch } from "@/src/domain/github/resolveInitialUserSearch";
 
 describe("SSR boundary - resolveInitialUserSearch", () => {
-  it("builds initial request from URL params", () => {
+  it("URL 파라미터를 기반으로 초기 사용자 검색 요청을 구성한다", () => {
     const r = resolveInitialUserSearch({
       keyword: "sheldhe",
       in: "login",

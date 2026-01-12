@@ -37,13 +37,13 @@ function okPage(itemsCount = 2, total = 50) {
   };
 }
 
-describe("useUserSearch integration", () => {
+describe("useUserSearchController - 훅 통합 테스트", () => {
   beforeEach(() => {
     mockTrigger.mockReset();
     mockTrigger.mockResolvedValue({ unwrap: async () => okPage() });
   });
 
-  it("calls fetch with page=1 and respects sort/order", async () => {
+  it("apply 호출 시 1페이지부터 정렬 조건에 맞게 검색 요청을 실행한다", async () => {
     const { result } = renderHook(() =>
       useUserSearchController({
         initialQ: "in:login sheldhe type:user",
@@ -68,7 +68,7 @@ describe("useUserSearch integration", () => {
     expect(callArgs.order).toBe("desc");
   });
 
-  it("loadMore increments page and appends (paging logic)", async () => {
+  it("loadMore 호출 시 페이지를 증가시키고 다음 페이지를 요청한다(CSR)", async () => {
     const { result } = renderHook(() =>
       useUserSearchController({
         initialQ: "in:login sheldhe type:user",

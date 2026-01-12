@@ -5,9 +5,9 @@ import {
 import { DEFAULT_QUERY } from "@/src/domain/github/userSearchDefaults";
 
 describe("userSearchUrl", () => {
-  it("parseUserSearchFromParams fills defaults & reads params", () => {
+  it("URL 파라미터를 읽어 검색 필터를 생성하고 누락된 값은 기본값으로 채운다", () => {
     const sp = {
-      keyword: "sheldhe",
+      keyword: "",
       in: "login",
       type: "user",
       sort: "followers",
@@ -37,14 +37,12 @@ describe("userSearchUrl", () => {
     expect(parsed.filters.sponsorable).toBe(true);
   });
 
-  it("toUserSearchParams makes stable url params", () => {
+  it("기본 검색 설정값이 URL 파라미터에 올바르게 포함된다", () => {
     const params = toUserSearchParams(DEFAULT_QUERY.filters, {
       sort: DEFAULT_QUERY.sort,
       order: DEFAULT_QUERY.order,
       perPage: DEFAULT_QUERY.perPage,
     });
-
-    // 최소한 기본 키는 들어가게(너 정책에 따라 조정)
     expect(params.get("sort")).toBe(DEFAULT_QUERY.sort);
     expect(params.get("order")).toBe(DEFAULT_QUERY.order);
     expect(params.get("perPage")).toBe(String(DEFAULT_QUERY.perPage));

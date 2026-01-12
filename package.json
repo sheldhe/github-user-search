@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "turbo run app:dev",
+    "dev": "turbo run app:dev -- -p 3333",
     "build": "turbo run app:build",
     "lint": "turbo run app:lint",
     "check-types": "turbo run check-types",
@@ -11,12 +11,13 @@
     "app:dev": "next dev --turbo",
     "app:build": "next build --turbopack",
     "app:lint": "next lint",
-    "test:unit": "jest",
-    "test:e2e": "cypress run",
     "build:wasm": "node scripts/build-wasm.mjs",
-    "test": "jest",
+    "test:unit": "jest",
     "test:watch": "jest --watch",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "e2e:dev": "start-server-and-test \"pnpm dev\" http://localhost:3333 \"pnpm cypress:run\"",
+    "e2e:prod": "pnpm build && start-server-and-test \"pnpm start\" http://localhost:3333 \"pnpm cypress:run\""
   },
   "dependencies": {
     "@emotion/cache": "11.14.0",

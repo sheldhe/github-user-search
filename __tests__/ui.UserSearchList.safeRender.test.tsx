@@ -6,8 +6,8 @@ jest.mock("@/src/shared/ui/AvatarCanvas", () => ({
   default: ({ src }: any) => <div data-testid="avatar">{String(src)}</div>,
 }));
 
-describe("UserSearchList safety", () => {
-  it("does not crash with unusual values", () => {
+describe("UserSearchList - 컴포넌트 안전성", () => {
+  it("로그인명이 매우 길거나 아바타 URL이 비어 있어도 정상적으로 렌더링된다", () => {
     render(
       <UserSearchList
         items={[
@@ -23,6 +23,7 @@ describe("UserSearchList safety", () => {
     );
 
     expect(screen.getByText(/very-very-long-login/)).toBeInTheDocument();
+
     expect(screen.getByTestId("avatar")).toBeInTheDocument();
   });
 });
