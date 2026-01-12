@@ -1,17 +1,18 @@
 import { buildUserSearchQ } from "@/src/domain/github/userSearchQuery";
 import ColorModeToggle from "@/src/shared/ui/ColorModeToggle";
+import { searchUsers } from "@/src/server/github/searchUsers";
 import { DEFAULT_QUERY } from "@/src/domain/github/userSearchDefaults";
 import { parseUserSearchFromParams } from "@/src/domain/github/userSearchUrl";
-import { searchUsers } from "@/src/server/github/searchUsers";
-import UserSearchClient from "@/src/features/use-search/components/UserSearchClient";
+import UserSearchClient from "@/src/features/user-search/components/UserSearchClient";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-type PageProps = {
-  searchParams?: Record<string, string | string[] | undefined>;
-};
-
-export default async function Page({ searchParams = {} }: PageProps) {
-  const { filters, sort, order, perPage } =
-    parseUserSearchFromParams(searchParams);
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const sp = await searchParams;
+  const { filters, sort, order, perPage } = parseUserSearchFromParams(sp);
 
   const q =
     buildUserSearchQ(filters) || buildUserSearchQ(DEFAULT_QUERY.filters);

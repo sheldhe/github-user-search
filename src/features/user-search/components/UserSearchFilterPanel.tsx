@@ -33,6 +33,7 @@ export default function UserSearchFilterPanel({
   onApply,
   onReset,
 }: Props) {
+  const applyDisabled = disabled || draft.keyword === "";
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
       <TextField
@@ -55,7 +56,6 @@ export default function UserSearchFilterPanel({
         <MenuItem value="name">name</MenuItem>
         <MenuItem value="email">email</MenuItem>
       </TextField>
-
       <TextField
         select
         label="Type"
@@ -163,7 +163,6 @@ export default function UserSearchFilterPanel({
         label="Created From"
         type="date"
         size="small"
-        InputLabelProps={{ shrink: true }}
         value={draft.created?.from ?? ""}
         onChange={(e) =>
           setDraft((p) => ({
@@ -179,7 +178,6 @@ export default function UserSearchFilterPanel({
         label="Created To"
         type="date"
         size="small"
-        InputLabelProps={{ shrink: true }}
         value={draft.created?.to ?? ""}
         onChange={(e) =>
           setDraft((p) => ({
@@ -213,7 +211,7 @@ export default function UserSearchFilterPanel({
       </TextField>
 
       <div className="flex gap-2 items-center">
-        <Button variant="contained" onClick={onApply} disabled={disabled}>
+        <Button variant="contained" onClick={onApply} disabled={applyDisabled}>
           Apply
         </Button>
         <Button variant="outlined" onClick={onReset} disabled={disabled}>

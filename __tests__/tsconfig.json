@@ -1,0 +1,6 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": { "types": ["jest", "node"] },
+  "include": ["./**/*.ts", "./**/*.tsx", "../jest.setup.ts"],
+  "exclude": ["../node_modules", "../cypress", "../.next"]
+}

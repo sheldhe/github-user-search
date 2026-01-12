@@ -1,5 +1,5 @@
-import { SearchUsersApiResponse } from "@/src/features/use-search/model/github.types";
-import { OrderKey } from "@/src/features/use-search/model/search.args";
+import { SearchUsersApiResponse } from "@/src/features/user-search/model/github.types";
+import { OrderKey } from "@/src/features/user-search/model/search.args";
 
 function readRateLimit(res: Response) {
   const limit = res.headers.get("x-ratelimit-limit");

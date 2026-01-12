@@ -2,7 +2,7 @@ import type { UserSearchFilters } from "./userSearchFilters";
 
 export const DEFAULT_FILTERS: UserSearchFilters = {
   accountType: "user",
-  keyword: "",
+  keyword: "sheldhe",
   inField: "login",
   repos: {},
   location: "",

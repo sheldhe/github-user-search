@@ -118,16 +118,19 @@ export function useUserSearchController({
       const res = await trigger(
         { q: nextQ, page: nextPage, perPage: PER_PAGE, sort, order },
         false
-      ).unwrap();
+      );
 
-      if (!res.ok) {
-        setErrorMsg(res.error.message);
+      const data = (res as any)?.data;
+      const error = (res as any)?.error;
+
+      if (!data?.ok) {
+        setErrorMsg(error?.message ?? "Unknown error");
         setHasMore(false);
         return false;
       }
 
-      const nextItems = res.data.items;
-      const nextTotal = res.data.total_count;
+      const nextItems = data.data.items;
+      const nextTotal = data.data.total_count;
 
       setTotal(nextTotal);
       setPage(nextPage);

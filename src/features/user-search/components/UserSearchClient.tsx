@@ -25,7 +25,7 @@ export default function UserSearchClient(props: Props) {
   const c = useUserSearchController(props);
 
   return (
-    <div className="min-h-dvh p-6 space-y-6">
+    <div className="min-h-dvh p-6 space-y-6" data-testid="user-search-client">
       <UserSearchFilterPanel
         draft={c.draft}
         setDraft={c.setDraft}
