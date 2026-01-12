@@ -60,11 +60,11 @@ pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
   /public/wasm 경로에서 정적 파일로 제공됩니다.
   새로 프로젝트를 클론한 사용자도 일반적인 개발 명령어만으로 바로 실행할 수 있습니다.
 
-# 실행 방법
+### 실행 방법
 
-Node.js v20 이상
-pnpm v10 이상
-GitHub Personal Access Token (Search API 호출용)
+- Node.js v20 이상
+- pnpm v10 이상
+- GitHub Personal Access Token (Search API 호출용)
 
 ## 1. 레포지토리 클론 및 의존성 설치
 
