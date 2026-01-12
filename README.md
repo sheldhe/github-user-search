@@ -25,13 +25,13 @@ pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
 
 ## Frontend Stack
 
-- Next.js (App Router)
-  -- Server Components / Client Components 분리
-  -- Route Segment 기반 구조
-- TypeScript
-  -- strict 모드 활성화
-  -- 타입 안정성을 통한 런타임 오류 최소화
-- ES2023
+- **Next.js (App Router)**
+  - Server Components / Client Components 분리
+  - Route Segment 기반 구조
+- **TypeScript**
+  - strict 모드 활성화
+  - 타입 안정성을 통한 런타임 오류 최소화
+- **ES2023**
 
 ## Jest + Cypress Type 충돌 이슈
 
