@@ -68,13 +68,11 @@ GitHub Personal Access Token (Search API 호출용)
 
 ## 1. 레포지토리 클론 및 의존성 설치
 
-<br/>
+```bash
 git clone https://github.com/sheldhe/github-user-search.git
-<br/>
 cd github-user-search
-<br/>
 pnpm install
-<br/>
+```
 
 ## 2. 환경 변수 설정
 
