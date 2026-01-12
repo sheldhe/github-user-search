@@ -60,13 +60,13 @@ pnpm + turbo 기반의 Monorepo 구조를 사용합니다.
   /public/wasm 경로에서 정적 파일로 제공됩니다.
   새로 프로젝트를 클론한 사용자도 일반적인 개발 명령어만으로 바로 실행할 수 있습니다.
 
-### 실행 방법
+## 실행 방법
 
 - Node.js v20 이상
 - pnpm v10 이상
 - GitHub Personal Access Token (Search API 호출용)
 
-## 1. 레포지토리 클론 및 의존성 설치
+### 1. 레포지토리 클론 및 의존성 설치
 
 ```bash
 git clone https://github.com/sheldhe/github-user-search.git
@@ -74,7 +74,7 @@ cd github-user-search
 pnpm install
 ```
 
-## 2. 환경 변수 설정
+### 2. 환경 변수 설정
 
 GitHub Search API 사용을 위해 토큰이 필요합니다.(.env.local 파일 생성)
 
@@ -82,17 +82,17 @@ GitHub Search API 사용을 위해 토큰이 필요합니다.(.env.local 파일 
  GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
 ```
 
-## 3. 개발 서버 실행
+### 3. 개발 서버 실행
 
 ```bash
 pnpm dev
 ```
 
-# 테스트 실행 방법
+## 테스트 실행 방법
 
 본 프로젝트는 Jest (단위/통합) + Cypress (E2E) 를 함께 사용합니다.
 
-## 단위 / 통합 테스트 (Jest)
+### 단위 / 통합 테스트 (Jest)
 
 ```bash
 pnpm test:unit
@@ -101,31 +101,34 @@ pnpm test:watch
 
 <br/>
 
-## 테스트 대상
+### 테스트 대상
 
 - 검색 쿼리 생성 로직 (buildUserSearchQ)
 - 페이징 로직 (page 증가, append 동작)
 - 정렬 / 필터 적용 로직
 - CSR 상태 제어 로직 (hook 단위 테스트)
 
-## E2E 테스트 (Cypress)
+### E2E 테스트 (Cypress)
 
 개발 서버 기반 실행
-<br/>
+
+```bash
 pnpm e2e:dev
-<br/>
+```
+
 내부 동작:
 
 - Next.js dev 서버 실행
 - Cypress 자동 실행
 - 테스트 종료 후 서버 종료
 
-## Cypress UI 모드
+### Cypress UI 모드
 
+```bash
 pnpm cypress:open
-<br/>
+```
 
-## E2E 테스트 범위 정리
+### E2E 테스트 범위 정리
 
 - 검색 쿼리 입력 → 결과 렌더링
 - 페이징 로직 (Load more / Infinite Scroll)
@@ -134,7 +137,7 @@ pnpm cypress:open
 - SSR → CSR Hydration 경계 검증
 - URL ↔ 상태 동기화
 
-## Jest + Cypress Type 충돌 이슈
+### Jest + Cypress Type 충돌 이슈
 
 Jest(단위/통합 테스트)와 Cypress(E2E 테스트)는 모두 전역 expect 타입을 제공하지만,
 Jest는 matcher 확장 기반(toHaveBeenCalled 등), Cypress는 Chai 기반(Assertion)이라
