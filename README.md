@@ -78,19 +78,17 @@ pnpm install
 
 ## 2. 환경 변수 설정
 
-GitHub Search API 사용을 위해 토큰이 필요합니다.
-<br/>
+GitHub Search API 사용을 위해 토큰이 필요합니다.(.env.local 파일 생성)
 
-.env.local 파일 생성:
-<br/>
-
-GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
-<br/>
+```bash
+ GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
+```
 
 ## 3. 개발 서버 실행
 
+```bash
 pnpm dev
-<br/>
+```
 
 # 테스트 실행 방법
 
@@ -124,11 +122,10 @@ pnpm e2e:dev
 - Cypress 자동 실행
 - 테스트 종료 후 서버 종료
 
-Cypress UI 모드
-<br/>
+## Cypress UI 모드
 
-- pnpm cypress:open
-  <br/>
+pnpm cypress:open
+<br/>
 
 ## E2E 테스트 범위 정리
 
