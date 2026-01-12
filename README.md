@@ -69,8 +69,14 @@ GitHub Personal Access Token (Search API 호출용)
 ## 1. 레포지토리 클론 및 의존성 설치
 
 <br/>
+
 git clone https://github.com/sheldhe/github-user-search.git
+
+<br/>
+
 cd github-user-search
+<br/>
+
 pnpm install
 <br/>
 
@@ -79,8 +85,10 @@ pnpm install
 GitHub Search API 사용을 위해 토큰이 필요합니다.
 
 <br/>
+
 .env.local 파일 생성:
 <br/>
+
 GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxxx
 <br/>
 
