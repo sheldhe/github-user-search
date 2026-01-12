@@ -99,8 +99,6 @@ pnpm test:unit
 pnpm test:watch
 ```
 
-<br/>
-
 ### 테스트 대상
 
 - 검색 쿼리 생성 로직 (buildUserSearchQ)
