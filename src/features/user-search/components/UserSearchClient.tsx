@@ -28,17 +28,16 @@ export default function UserSearchClient(props: Props) {
     <div className="min-h-dvh p-6 space-y-6" data-testid="user-search-client">
       <UserSearchFilterPanel
         draft={c.draft}
-        setDraft={c.setDraft}
+        setDraftAction={c.setDraft}
         sort={c.sort}
-        setSort={c.setSort}
+        setSortAction={c.setSort}
         order={c.order}
-        setOrder={c.setOrder}
+        setOrderAction={c.setOrder}
         disabled={c.isFetching}
-        onApply={c.apply}
-        onReset={c.reset}
-        onLoadMore={c.loadMore}
+        onApplyAction={c.apply}
+        onResetAction={c.reset}
+        onLoadMoreAction={c.loadMore}
       />
-
       <UserSearchStatusBar
         q={c.q}
         remaining={c.rateLimit?.remaining}

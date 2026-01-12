@@ -11,31 +11,31 @@ type OrderKey = "asc" | "desc";
 
 type Props = {
   draft: UserSearchFilters;
-  setDraft: React.Dispatch<React.SetStateAction<UserSearchFilters>>;
+  setDraftAction: React.Dispatch<React.SetStateAction<UserSearchFilters>>;
 
   sort: SortKey;
-  setSort: (v: SortKey) => void;
+  setSortAction: (v: SortKey) => void;
 
   order: OrderKey;
-  setOrder: (v: OrderKey) => void;
+  setOrderAction: (v: OrderKey) => void;
 
   disabled?: boolean;
-  onApply: () => void;
-  onReset: () => void;
-  onLoadMore: () => void;
+  onApplyAction: () => void;
+  onResetAction: () => void;
+  onLoadMoreAction: () => void;
 };
 
 export default function UserSearchFilterPanel({
   draft,
-  setDraft,
+  setDraftAction,
   sort,
-  setSort,
+  setSortAction,
   order,
-  setOrder,
+  setOrderAction,
   disabled,
-  onApply,
-  onReset,
-  onLoadMore,
+  onApplyAction,
+  onResetAction,
+  onLoadMoreAction,
 }: Props) {
   const applyDisabled = disabled || draft.keyword.trim() === "";
 
@@ -50,7 +50,9 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.keyword}
         inputProps={{ "data-cy": "keyword" }}
-        onChange={(e) => setDraft((p) => ({ ...p, keyword: e.target.value }))}
+        onChange={(e) =>
+          setDraftAction((p) => ({ ...p, keyword: e.target.value }))
+        }
       />
 
       {/* Search In (select) */}
@@ -60,7 +62,7 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.inField}
         onChange={(e) =>
-          setDraft((p) => ({ ...p, inField: e.target.value as any }))
+          setDraftAction((p) => ({ ...p, inField: e.target.value as any }))
         }
         SelectProps={{
           inputProps: { "data-cy": "inField-select" },
@@ -87,7 +89,7 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.accountType}
         onChange={(e) =>
-          setDraft((p) => ({ ...p, accountType: e.target.value as any }))
+          setDraftAction((p) => ({ ...p, accountType: e.target.value as any }))
         }
         SelectProps={{
           inputProps: { "data-cy": "accountType-select" },
@@ -112,7 +114,10 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.sponsorable ? "yes" : "no"}
         onChange={(e) =>
-          setDraft((p) => ({ ...p, sponsorable: e.target.value === "yes" }))
+          setDraftAction((p) => ({
+            ...p,
+            sponsorable: e.target.value === "yes",
+          }))
         }
         SelectProps={{
           inputProps: { "data-cy": "sponsorable-select" },
@@ -133,7 +138,9 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.location ?? ""}
         inputProps={{ "data-cy": "location" }}
-        onChange={(e) => setDraft((p) => ({ ...p, location: e.target.value }))}
+        onChange={(e) =>
+          setDraftAction((p) => ({ ...p, location: e.target.value }))
+        }
       />
 
       {/* Language */}
@@ -142,7 +149,9 @@ export default function UserSearchFilterPanel({
         size="small"
         value={draft.language ?? ""}
         inputProps={{ "data-cy": "language" }}
-        onChange={(e) => setDraft((p) => ({ ...p, language: e.target.value }))}
+        onChange={(e) =>
+          setDraftAction((p) => ({ ...p, language: e.target.value }))
+        }
       />
 
       {/* Repos min/max */}
@@ -153,7 +162,7 @@ export default function UserSearchFilterPanel({
         value={draft.repos?.min ?? ""}
         inputProps={{ "data-cy": "repos-min" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             repos: {
               ...(p.repos ?? {}),
@@ -169,7 +178,7 @@ export default function UserSearchFilterPanel({
         value={draft.repos?.max ?? ""}
         inputProps={{ "data-cy": "repos-max" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             repos: {
               ...(p.repos ?? {}),
@@ -187,7 +196,7 @@ export default function UserSearchFilterPanel({
         value={draft.followers?.min ?? ""}
         inputProps={{ "data-cy": "followers-min" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             followers: {
               ...(p.followers ?? {}),
@@ -203,7 +212,7 @@ export default function UserSearchFilterPanel({
         value={draft.followers?.max ?? ""}
         inputProps={{ "data-cy": "followers-max" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             followers: {
               ...(p.followers ?? {}),
@@ -222,7 +231,7 @@ export default function UserSearchFilterPanel({
         value={draft.created?.from ?? ""}
         inputProps={{ "data-cy": "created-from" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             created: {
               ...(p.created ?? {}),
@@ -239,7 +248,7 @@ export default function UserSearchFilterPanel({
         value={draft.created?.to ?? ""}
         inputProps={{ "data-cy": "created-to" }}
         onChange={(e) =>
-          setDraft((p) => ({
+          setDraftAction((p) => ({
             ...p,
             created: { ...(p.created ?? {}), to: e.target.value || undefined },
           }))
@@ -252,7 +261,7 @@ export default function UserSearchFilterPanel({
         label="Sort"
         size="small"
         value={sort}
-        onChange={(e) => setSort(e.target.value as SortKey)}
+        onChange={(e) => setSortAction(e.target.value as SortKey)}
         SelectProps={{
           inputProps: { "data-cy": "sort-select" },
           MenuProps: { PaperProps: { "data-cy": "sort-menu" } as any },
@@ -275,7 +284,7 @@ export default function UserSearchFilterPanel({
         label="Order"
         size="small"
         value={order}
-        onChange={(e) => setOrder(e.target.value as OrderKey)}
+        onChange={(e) => setOrderAction(e.target.value as OrderKey)}
         SelectProps={{
           inputProps: { "data-cy": "order-select" },
           MenuProps: { PaperProps: { "data-cy": "order-menu" } as any },
@@ -289,22 +298,25 @@ export default function UserSearchFilterPanel({
         </MenuItem>
       </TextField>
 
-      {/* Actions */}
       <div className="flex gap-2 items-center">
         <Button
           variant="contained"
-          onClick={onApply}
+          onClick={onApplyAction}
           disabled={applyDisabled}
           data-cy="apply"
         >
           Apply
         </Button>
-        <Button data-cy="load-more" variant="outlined" onClick={onLoadMore}>
+        <Button
+          data-cy="load-more"
+          variant="outlined"
+          onClick={onLoadMoreAction}
+        >
           Load more
         </Button>
         <Button
           variant="outlined"
-          onClick={onReset}
+          onClick={onResetAction}
           disabled={disabled}
           data-cy="reset"
         >
