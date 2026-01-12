@@ -96,10 +96,10 @@ pnpm dev
 
 ## 단위 / 통합 테스트 (Jest)
 
-<br/>
+```bash
 pnpm test:unit
-<br/>
 pnpm test:watch
+```
 
 <br/>
 
